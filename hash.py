@@ -403,8 +403,12 @@ class IdentifierHashAndDecrypt:
 
 	def DecryptBase64Hashes(self):
 
-		resposta = base64.b64decode(self.Hash).decode()
-		print(resposta)
+		try:
+			resposta = base64.b64decode(self.Hash).decode()
+		except base64.binascii.Error:
+			print("Nenhuma hash encontrada!")
+		else:
+			print(resposta)
 
 if __name__ == "__main__":
 
