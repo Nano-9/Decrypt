@@ -215,7 +215,7 @@ class IdentifierHashAndDecrypt:
 					continue
 			print("Abrindo Wordlist 2...")
 			sleep(2)
-			with open("10Milhoes","rt") as passwords:
+			with open("10Milhoes.txt","rt") as passwords:
 				try:
 					for senhas in passwords:
 						transf_pass = "{}".format(senhas.replace("\n","")).encode()
