@@ -42,6 +42,7 @@
 </h1>
   
 <h4>
+  - pip install -r requirements.txt
   - python hash.py sua hash aqui
 </h4>
 <h1>
