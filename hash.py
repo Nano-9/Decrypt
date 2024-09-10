@@ -5,6 +5,7 @@ import sys
 import random
 import requests
 import json
+import base64
 import hashlib
 import fake_useragent
 import clear_screen
@@ -400,9 +401,14 @@ class IdentifierHashAndDecrypt:
 			print("Senha não encontrada!\n")
 			raise SystemExit
 
+	def DecryptBase64Hashes(self):
+
+		resposta = base64.b64decode(self.Hash).decode()
+		print(resposta)
+
 if __name__ == "__main__":
 
-	lista_separet = ["md5","sha1"]
+	lista_separet = ["md5","sha1","base64 encoded string"]
 	clear_screen.Clear()
 	baner.Banner()
 	EntradaUser = sys.argv
@@ -414,6 +420,8 @@ if __name__ == "__main__":
 				inicial.DecryptMD5Hashes()
 			elif hashest.lower() == "sha1":
 				inicial.DecryptSHA1Hashes()
+			elif hashest.lower() == "base64 encoded string":
+				inicial.DecryptBase64Hashes()
 			elif hashest.lower() not in lista_separet:
 				inicial.DecryptOtherHashes()
 	else:
