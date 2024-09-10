@@ -9,7 +9,6 @@ import hashlib
 import fake_useragent
 import clear_screen
 import baner
-from tabulate import tabulate
 from bs4 import BeautifulSoup
 from time import sleep
 
