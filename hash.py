@@ -118,7 +118,7 @@ class IdentifierHashAndDecrypt:
 					pass
 				else:
 					baner.Banner()
-					with open("rockyou.txt","rt") as passwords:
+					with open("word1","rt") as passwords:
 						try:
 							for senhas in passwords:
 								transf_pass = "{}".format(senhas.replace("\n","")).encode()
@@ -200,7 +200,7 @@ class IdentifierHashAndDecrypt:
 
 		while self.Sites:
 			baner.Banner()
-			with open("rockyou.txt","rt") as passwords:
+			with open("word1.txt","rt") as passwords:
 				try:
 					for senhas in passwords:
 						transf_pass = "{}".format(senhas.replace("\n","")).encode()
@@ -254,7 +254,7 @@ class IdentifierHashAndDecrypt:
 		while self.Sites:
 			Found = False
 			baner.Banner()
-			with open("rockyou.txt","rt") as passwords:
+			with open("word1.txt","rt") as passwords:
 				try:
 					for senhas in passwords:
 						transf_pass = "{}".format(senhas.replace("\n","")).encode()
