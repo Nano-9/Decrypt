@@ -20,7 +20,7 @@
 </h4>
 
 <h1>
-  Sobre sites, apis e wordlist do scripts:
+  Sobre sites, API'S e wordlist do scripts:
 </h1>
 
 <h4>
