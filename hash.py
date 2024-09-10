@@ -29,10 +29,7 @@ class IdentifierHashAndDecrypt:
 
 
 	def ReturnTypeHashes(self):
-
-		if self.Files:
-			print("OOOOOIIIIIA")
-
+		
 		self.Sessions = requests.Session()
 		try:
 			self.Connects = self.Sessions.get(f"https://hashes.com/en/api/identifier?hash={self.Hash}",verify=True,headers=self.Headers)
