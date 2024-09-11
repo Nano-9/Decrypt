@@ -20,6 +20,24 @@
 </h4>
 
 <h1>
+  Wordlists necessárias para instalação:
+</h1>
+<h4>
+- ESCOLHA 2 BAIXE, RENOMEIE PARA "word1.txt" e "word2.txt" <br>
+- e depois coloque dentro da pasta do script! Pronto, é só usar!<br><br>
+- https://weakpass.com/wordlist/1256<br>
+- https://weakpass.com/wordlist/1927<br>
+- https://weakpass.com/wordlist/1947<br>
+- https://weakpass.com/wordlist/1948<br>
+- https://weakpass.com/wordlist/1948<br>
+- https://weakpass.com/wordlist/1947<br>
+- https://weakpass.com/wordlist/1950<br>
+- https://download.weakpass.com/wordlists/all-in-one/1/all_in_one.7z<br>
+- https://download.weakpass.com/wordlists/all-in-one/1/all_in_one_w.7z<br>
+- https://download.weakpass.com/wordlists/all-in-one/1/all_in_one_p.7z<br>
+</h4>
+
+<h1>
   Sobre sites, API'S e wordlist do scripts:
 </h1>
 
