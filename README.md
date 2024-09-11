@@ -23,7 +23,7 @@
   Wordlists necessárias para instalação:
 </h1>
 <h4>
-- ESCOLHA 2 BAIXE, RENOMEIE PARA "word1.txt" e "word2.txt" <br>
+- ESCOLHA 2 E BAIXE, RENOMEIE PARA "word1.txt" e "word2.txt" <br>
 - e depois coloque dentro da pasta do script! Pronto, é só usar!<br><br>
 - https://weakpass.com/wordlist/1256<br>
 - https://weakpass.com/wordlist/1927<br>
