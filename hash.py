@@ -429,8 +429,13 @@ if __name__ == "__main__":
 	if install:
 		baner.Banner()
 		print("\033[1m[\033[m\033[1;31m OOOPSS! \033[m\033[1m]\033[m\n")
-		print("\033[1;31m[-]\033[m \033[1mEscolha e instale 2 wordlists e renomeie-as para \033[1;36m>>\033[m word1.txt | word2.txt  e depois coloque as na pasta do script \033[1;36m<<\033[m\033[1m")
-		print("\033[1;32m[+]\033[m Link para instalação: https://github.com/nano-9/Decrypt \033[1;36m>>\033[m Leia o README para pegar os links \033[1;36m<<\033[m")
+		print("\033[1;32m[\033[m\033[1;32m!\033[1m]\033[m\033[1m Siga as instruções para configurar o script!\033[m \033[1;32m[\033[m\033[1;32m!\033[1m]\033[m\n")
+		print("\033[1;33m[\033[m\033[1m+\033[1;33m]\033[m \033[1;34mPasso\033[m\033[1m 1:\033[m \033[1mInstale 2 das wordlists que deixei no README na página inicial do script\033[m")
+		print("\033[1;33m[\033[m\033[1m+\033[1;33m]\033[m \033[1;34mPasso\033[m\033[1m 2:\033[m \033[1mExtraia a wordlist se ela estiver zipada!\033[m")
+		print("\033[1;33m[\033[m\033[1m+\033[1;33m]\033[m \033[1;34mPasso\033[m\033[1m 3:\033[m \033[1mApós a extração, renomeie as Wordlists para word1.txt e word2.txt\033[m")
+		print("\033[1;33m[\033[m\033[1m+\033[1;33m]\033[m \033[1;34mPasso\033[m\033[1m 4:\033[m \033[1mColoque as duas dentro aqui da pasta do scrypt\033[m")
+		print("\033[1;33m[\033[m\033[1m+\033[1;33m]\033[m \033[1;34mPasso\033[m\033[1m 5:\033[m \033[1mPronto! Agora você já pode utilizar o script!\033[m")
+		print("\n\033[1;33m[\033[m\033[1m+\033[1;33m]\033[m \033[1;34mCriador\033[m\033[1m: Nano\033[m")
 	raise SystemExit
 
 	lista_separet = ["md5","sha1","base64 encoded string"]
