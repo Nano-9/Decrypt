@@ -38,7 +38,7 @@ class IdentifierHashAndDecrypt:
 		except requests.exceptions.SSLError:
 			print("Temporariamente indisponível")
 			raise SystemExit
-		except requets.exceptions.ReadTimeout:
+		except requests.exceptions.ReadTimeout:
 			raise SystemExit
 		else:
 			try:
@@ -98,7 +98,7 @@ class IdentifierHashAndDecrypt:
 			except Exception as e:
 				print(e)
 
-			while self.Sites:
+			if self.Sites:
 				Found = False
 				
 				try:
@@ -114,27 +114,29 @@ class IdentifierHashAndDecrypt:
 				except:
 					pass
 				else:
+					sleep(2)
 					baner.Banner()
 					with open("word1.txt","rt") as passwords:
 						try:
 							for senhas in passwords:
-								transf_pass = "{}".format(senhas.replace("\n","")).encode()
+								transf_pass = "{}".format(senhas.strip().replace("\n","")).encode()
 								encode_pass = hashlib.md5(transf_pass).hexdigest()
 
 								if encode_pass == self.Hash:
 									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
-									exit()
+									raise SystemExit
 								else:
 									print("\033[1;31m[\033[m\033[1m-\033[m\033[1;31m]\033[m \033[3m{}\033[m  \033[1;33m|\033[m  \033[3m{}\033[m".format(self.Hash,str(encode_pass)))
 						except UnicodeDecodeError:
-							continue
+							pass
+					passwords.close()
 					if not Found:
 						print("\nAbrindo Wordlist 2....\n")
 						sleep(2)
 						with open("word2.txt","rt") as passw:
 							try:
 								for senhas in passw:
-									transf_pass = "{}".format(senhas.replace("\n","")).encode()
+									transf_pass = "{}".format(senhas.strip().replace("\n","")).encode()
 									encode_pass = hashlib.md5(transf_pass).hexdigest()
 
 									if encode_pass == self.Hash:
@@ -143,9 +145,9 @@ class IdentifierHashAndDecrypt:
 									else:
 										print("\033[1;31m[\033[m\033[1m-\033[m\033[1;31m]\033[m \033[3m{}\033[m  \033[1;33m|\033[m  \033[3m{}\033[m".format(self.Hash,str(encode_pass)))
 							except UnicodeDecodeError:
-								continue
+								pass
 						raise SystemExit
-
+					passw.close()
 # DESCRIPTOGRAFANDO A HASH  SHA1
 	def DecryptSHA1Hashes(self):
 
@@ -195,12 +197,12 @@ class IdentifierHashAndDecrypt:
 			print("Abrindo wordlists...")
 			sleep(2)
 
-		while self.Sites:
+		if self.Sites:
 			baner.Banner()
 			with open("word1.txt","rt") as passwords:
 				try:
 					for senhas in passwords:
-						transf_pass = "{}".format(senhas.replace("\n","")).encode()
+						transf_pass = "{}".format(senhas.strip().replace("\n","")).encode()
 						encode_pass = hashlib.sha1(transf_pass).hexdigest()
 
 						if encode_pass == self.Hash:
@@ -209,13 +211,13 @@ class IdentifierHashAndDecrypt:
 						else:
 							print("\033[1;31m[\033[m\033[1m-\033[m\033[1;31m]\033[m \033[3m{}\033[m  \033[1;33m|\033[m  \033[3m{}\033[m".format(self.Hash,str(encode_pass)))
 				except UnicodeDecodeError:
-					continue
+					pass
 			print("Abrindo Wordlist 2...")
 			sleep(2)
 			with open("word2.txt","rt") as passwords:
 				try:
 					for senhas in passwords:
-						transf_pass = "{}".format(senhas.replace("\n","")).encode()
+						transf_pass = "{}".format(senhas.strip().replace("\n","")).encode()
 						encode_pass = hashlib.sha1(transf_pass).hexdigest()
 
 						if encode_pass == self.Hash:
@@ -224,7 +226,7 @@ class IdentifierHashAndDecrypt:
 						else:
 							print("\033[1;31m[\033[m\033[1m-\033[m\033[1;31m]\033[m \033[3m{}\033[m  \033[1;33m|\033[m  \033[3m{}\033[m".format(self.Hash,str(encode_pass)))
 				except UnicodeDecodeError:
-					continue
+					pass
 			raise SystemExit
 
 	def DecryptOtherHashes(self):
@@ -248,13 +250,13 @@ class IdentifierHashAndDecrypt:
 		except:
 			pass
 
-		while self.Sites:
+		if self.Sites:
 			Found = False
 			baner.Banner()
 			with open("word1.txt","rt") as passwords:
 				try:
 					for senhas in passwords:
-						transf_pass = "{}".format(senhas.replace("\n","")).encode()
+						transf_pass = "{}".format(senhas.strip().replace("\n","")).encode()
 
 						if self.HashType.lower() == "sha256":
 							encode_pass = hashlib.sha256(transf_pass).hexdigest()
@@ -322,13 +324,13 @@ class IdentifierHashAndDecrypt:
 							else:
 								print("\033[1;31m[\033[m\033[1m-\033[m\033[1;31m]\033[m \033[3m{}\033[m  \033[1;33m|\033[m  \033[3m{}\033[m".format(self.Hash,str(encode_pass)))
 				except UnicodeDecodeError:
-					continue
+					pass
 			Found = False
 			if not Found:
 				with open("word2.txt","r") as pwssd:
 					try:
 						for senhas in pwssd:
-							transf_pass = "{}".format(senhas.replace("\n","")).encode()
+							transf_pass = "{}".format(senhas.strip().replace("\n","")).encode()
 
 							if self.HashType.lower() == "sha256":
 								encode_pass = hashlib.sha256(transf_pass).hexdigest()
@@ -396,7 +398,7 @@ class IdentifierHashAndDecrypt:
 								else:
 									print("\033[1;31m[\033[m\033[1m-\033[m\033[1;31m]\033[m \033[3m{}\033[m  \033[1;33m|\033[m  \033[3m{}\033[m".format(self.Hash,str(encode_pass)))
 					except UnicodeDecodeError:
-						continue
+						pass
 
 			print("Senha não encontrada!\n")
 			raise SystemExit
@@ -443,7 +445,7 @@ if __name__ == "__main__":
 	baner.Banner()
 	EntradaUser = sys.argv
 	if len(EntradaUser) == 2:
-		inicial = IdentifierHashAndDecrypt(hashes=sys.argv[1])
+		inicial = IdentifierHashAndDecrypt(hashes=sys.argv[1].strip())
 		hashest = inicial.ReturnTypeHashes()
 		if hashest != None:
 			if hashest.lower() == "md5":
