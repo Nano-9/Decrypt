@@ -131,7 +131,7 @@ class IdentifierHashAndDecrypt:
 					if not Found:
 						print("\nAbrindo Wordlist 2....\n")
 						sleep(2)
-						with open("10Milhoes.txt","rt") as passw:
+						with open("word2.txt","rt") as passw:
 							try:
 								for senhas in passw:
 									transf_pass = "{}".format(senhas.replace("\n","")).encode()
@@ -212,7 +212,7 @@ class IdentifierHashAndDecrypt:
 					continue
 			print("Abrindo Wordlist 2...")
 			sleep(2)
-			with open("10Milhoes.txt","rt") as passwords:
+			with open("word2.txt","rt") as passwords:
 				try:
 					for senhas in passwords:
 						transf_pass = "{}".format(senhas.replace("\n","")).encode()
@@ -325,7 +325,7 @@ class IdentifierHashAndDecrypt:
 					continue
 			Found = False
 			if not Found:
-				with open("10Milhoes.txt","r") as pwssd:
+				with open("word2.txt","r") as pwssd:
 					try:
 						for senhas in pwssd:
 							transf_pass = "{}".format(senhas.replace("\n","")).encode()
@@ -411,6 +411,27 @@ class IdentifierHashAndDecrypt:
 			print(resposta)
 
 if __name__ == "__main__":
+
+	matcheswords = ["word1.txt","word2.txt"]
+	install = False
+
+	try:
+		caminho_script = os.getcwd()
+		for wordlists in os.listdir(str(caminho_script)):
+			if wordlists.endswith(".txt"):
+				a = wordlists
+				if wordlists not in matcheswords:
+					install = True
+			else:
+				pass
+	except:
+		pass
+	if install:
+		baner.Banner()
+		print("\033[1m[\033[m\033[1;31m OOOPSS! \033[m\033[1m]\033[m\n")
+		print("\033[1;31m[-]\033[m \033[1mEscolha e instale 2 wordlists e renomeie-as para \033[1;36m>>\033[m word1.txt | word2.txt  e depois coloque as na pasta do script \033[1;36m<<\033[m\033[1m")
+		print("\033[1;32m[+]\033[m Link para instalação: https://github.com/nano-9/Decrypt \033[1;36m>>\033[m Leia o README para pegar os links \033[1;36m<<\033[m")
+	raise SystemExit
 
 	lista_separet = ["md5","sha1","base64 encoded string"]
 	clear_screen.Clear()
