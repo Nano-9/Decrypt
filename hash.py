@@ -439,7 +439,7 @@ if __name__ == "__main__":
 		print("\033[1;33m[\033[m\033[1m+\033[1;33m]\033[m \033[1;34mPasso\033[m\033[1m 5:\033[m \033[1mPronto! Agora você já pode utilizar o script!\033[m\n")
 		print("\033[1;33m[\033[m\033[1m+\033[1;33m]\033[m \033[1;34mWordlists\033[m\033[1m:\033[m \033[1mhttps://github.com/nano-9/Decrypt\033[m")
 		print("\n\033[1;33m[\033[m\033[1m+\033[1;33m]\033[m \033[1;34mCriador\033[m\033[1m: Nano\033[m\n")
-
+		raise SystemExit
 	lista_separet = ["md5","sha1","base64 encoded string"]
 	clear_screen.Clear()
 	baner.Banner()
