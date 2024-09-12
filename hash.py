@@ -415,15 +415,16 @@ class IdentifierHashAndDecrypt:
 if __name__ == "__main__":
 
 	matcheswords = ["word1.txt","word2.txt"]
-	install = False
+	install = True
 
 	try:
 		caminho_script = os.getcwd()
 		for wordlists in os.listdir(str(caminho_script)):
-			if wordlists.endswith(".txt"):
+			if wordlists.startswith("word"):
 				a = wordlists
-				if wordlists not in matcheswords:
-					install = True
+				if wordlists.replace("\n","").strip() in matcheswords:
+					print(wordlists)
+					install = False
 			else:
 				pass
 	except:
