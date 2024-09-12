@@ -7,6 +7,7 @@ import requests
 import json
 import base64
 import hashlib
+import datetime
 import fake_useragent
 import clear_screen
 import baner
@@ -26,6 +27,7 @@ class IdentifierHashAndDecrypt:
 		self.HashDecrypted = False
 		self.Sites = True
 		self.Files = files
+		self.start1 = datetime.datetime.now()
 
 
 	def ReturnTypeHashes(self):
@@ -65,22 +67,25 @@ class IdentifierHashAndDecrypt:
 
 		print("\n")
 
-		self.DecryptMD5Passwords = self.Sessions.get(f"http://www.nitrxgen.net/md5db/{self.Hash}.json",verify=True)
+		self.DecryptMD5Passwords = self.Sessions.get(f"http://www.nitrxgen.net/md5db/{self.Hash}.json",verify=True,headers=self.Headers)
 		self.ResultadoDecryptPwd = json.loads(self.DecryptMD5Passwords.text)
 
 		if str(self.ResultadoDecryptPwd["result"]["found"]) == "True":
 			self.HashDecrypted = self.ResultadoDecryptPwd["result"]["pass"]
 
 			if self.HashDecrypted:
+				self.finish = datetime.datetime.now() - self.start1
+				print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 				print("\033[1;32m[\033[m+\033[1;32m]\033[m \033[1;36mTentativa\033[m\033[1m 1\033[m")
 				print("\033[1;32m[\033[m*\033[1;32m] Hash\033[m\033[1m: {}\033[m  \033[1;36m|\033[m  \033[1m{}\033[m".format(self.Hash,self.HashDecrypted))
 				self.Sites = False
+				raise SystemExit
 		else:
 
 			print("\033[1;32m[\033[m+\033[1;32m]\033[m \033[1;36mTentativa\033[m\033[1m 1\033[m")
 			print("\033[1;31m[\33[m*\033[1;31m] Hash:\033[m \033[1m{}\033[m  \033[1;36m|\033[m  \033[1;31mFAIL\033[m\n".format(self.Hash))
 			try:
-				self.DecryptMD5Passwords = self.Sessions.get(f"https://md5.gromweb.com/?md5={self.Hash}",verify=True)
+				self.DecryptMD5Passwords = self.Sessions.get(f"https://md5.gromweb.com/?md5={self.Hash}",verify=True,headers=self.Headers)
 				self.resultados = self.DecryptMD5Passwords.text
 				self.procurar = BeautifulSoup(self.resultados,"html.parser")
 				self.achou = self.procurar.find_all("a",{"class":"String"},href=True)
@@ -88,9 +93,12 @@ class IdentifierHashAndDecrypt:
 					if len(self.achou) > 1:
 						self.HashDecrypted = str(self.achou[0]["href"].replace("/?string=","")).strip()
 						if self.HashDecrypted:
+							self.finish = datetime.datetime.now() - self.start1
+							print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 							print("\033[1;32m[\033[m+\033[1;32m]\033[m \033[1;36mTentativa\033[m\033[1m 2\033[m")
 							print("\033[1;32m[\033[m*\033[1;32m] Hash\033[m\033[1m: {}\033[m  \033[1;36m|\033[m  \033[1m{}\033[m".format(self.Hash,self.HashDecrypted))
 							self.Sites = False
+							raise SystemExit
 					else:
 						print("\033[1;32m[\033[m+\033[1;32m]\033[m \033[1;36mTentativa\033[m\033[1m 2\033[m")
 						print("\033[1;31m[\33[m*\033[1;31m] Hash:\033[m \033[1m{}\033[m  \033[1;36m|\033[m  \033[1;31mFAIL\033[m\n".format(self.Hash))
@@ -108,6 +116,8 @@ class IdentifierHashAndDecrypt:
 						print("\033[1;32m[\033[m+\033[1;32m]\033[m \033[1;36mTentativa\033[m\033[1m 3\033[m")
 						print("\033[1;31m[\33[m*\033[1;31m] Hash:\033[m \033[1m{}\033[m  \033[1;36m|\033[m  \033[1;31mFAIL\033[m\n".format(self.Hash))
 					else:
+						self.finish = datetime.datetime.now() - self.start1
+						print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 						print("\033[1;32m[\033[m+\033[1;32m]\033[m \033[1;36mTentativa\033[m\033[1m 3\033[m")
 						print("\033[1;32m[\033[m*\033[1;32m] Hash\033[m\033[1m: {}\033[m  \033[1;36m|\033[m  \033[1m{}\033[m".format(self.Hash,self.ResultadoJson["messages"]["text"]))
 						self.Sites = False
@@ -123,6 +133,8 @@ class IdentifierHashAndDecrypt:
 								encode_pass = hashlib.md5(transf_pass).hexdigest()
 
 								if encode_pass == self.Hash:
+									self.finish = datetime.datetime.now() - self.start1
+									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 									raise SystemExit
 								else:
@@ -140,6 +152,8 @@ class IdentifierHashAndDecrypt:
 									encode_pass = hashlib.md5(transf_pass).hexdigest()
 
 									if encode_pass == self.Hash:
+										self.finish = datetime.datetime.now() - self.start1
+										print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 										print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 										exit()
 									else:
@@ -160,7 +174,7 @@ class IdentifierHashAndDecrypt:
 
 		print("\n")
 		try:
-			self.DecryptMD5Passwords = self.Sessions.get(f"https://sha1.gromweb.com/?hash={self.Hash}",verify=True)
+			self.DecryptMD5Passwords = self.Sessions.get(f"https://sha1.gromweb.com/?hash={self.Hash}",verify=True,headers=self.Headers)
 			self.resultados = self.DecryptMD5Passwords.text
 			self.procurar = BeautifulSoup(self.resultados,"html.parser")
 			self.achou = self.procurar.find_all("a",{"class":"String"},href=True)
@@ -178,13 +192,18 @@ class IdentifierHashAndDecrypt:
 							print("\033[1;31m[\33[m*\033[1;31m]\033[m\033[1;36m Tentativa\033[m\033[1;36m 2\033[m")
 							print("\033[1;31m[\33[m*\033[1;31m] Hash:\033[m \033[1m{}\033[m  \033[1;36m|\033[m  \033[1;31mFAIL\033[m\n".format(self.Hash))
 						else:
+							self.finish = datetime.datetime.now() - self.start1
+							print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 							print("\033[1;31m[\33[m*\033[1;31m]\033[m\033[1;36m Tentativa\033[m\033[1;36m 3\033[m")
 							print("\033[1;32m[\033[m*\033[1;32m] Hash\033[m\033[1m: {}\033[m  \033[1;36m|\033[m  \033[1m{}\033[m".format(self.Hash,self.ResultadoJson["messages"]["text"]))
+							raise SystemExit
 					except:
 						pass
 				else:
 					self.HashDecrypted = str(self.achou[0]["href"].replace("/?string=","")).strip()
 					if self.HashDecrypted:
+						self.finish = datetime.datetime.now() - self.start1
+						print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 						print("\033[1;31m[\33[m*\033[1;31m]\033[m\033[1;36m Tentativa\033[m\033[1;36m 1\033[m")
 						print("\033[1;32m[\033[m*\033[1;32m] Hash\033[m\033[1m: {}\033[m  \033[1;36m|\033[m  \033[1m{}\033[m".format(self.Hash,self.HashDecrypted))
 						self.Sites = False
@@ -206,6 +225,8 @@ class IdentifierHashAndDecrypt:
 						encode_pass = hashlib.sha1(transf_pass).hexdigest()
 
 						if encode_pass == self.Hash:
+							self.finish = datetime.datetime.now() - self.start1
+							print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 							print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 							exit()
 						else:
@@ -221,6 +242,8 @@ class IdentifierHashAndDecrypt:
 						encode_pass = hashlib.sha1(transf_pass).hexdigest()
 
 						if encode_pass == self.Hash:
+							self.finish = datetime.datetime.now() - self.start1
+							print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 							print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 							exit()
 						else:
@@ -245,8 +268,11 @@ class IdentifierHashAndDecrypt:
 				print("\033[1;31m[\33[m*\033[1;31m]\033[m\033[1;36m Tentativa\033[m\033[1;36m 1\033[m")
 				print("\033[1;31m[\033[m*\033[1;32m] Hash\033[m\033[1m: {}\033[m  \033[1;36m|\033[m  \033[1m{}\033[m".format(self.Hash))
 			else:
+				self.finish = datetime.datetime.now() - self.start1
+				print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 				print("\033[1;31m[\33[m*\033[1;31m]\033[m\033[1;36m Tentativa\033[m\033[1;36m 1\033[m")
 				print("\033[1;32m[\033[m*\033[1;32m] Hash\033[m\033[1m: {}\033[m  \033[1;36m|\033[m  \033[1m{}\033[m".format(self.Hash,self.ResultadoJson["messages"]["text"]))
+				raise SystemExit
 		except:
 			pass
 
@@ -262,6 +288,8 @@ class IdentifierHashAndDecrypt:
 							encode_pass = hashlib.sha256(transf_pass).hexdigest()
 
 							if encode_pass == self.Hash:
+								self.finish = datetime.datetime.now() - self.start1
+								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 								exit()
 							else:
@@ -270,6 +298,8 @@ class IdentifierHashAndDecrypt:
 							encode_pass = hashlib.md4(transf_pass).hexdigest()
 
 							if encode_pass == self.Hash:
+								self.finish = datetime.datetime.now() - self.start1
+								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 								exit()
 							else:
@@ -279,6 +309,8 @@ class IdentifierHashAndDecrypt:
 							encode_pass = hashlib.md2(transf_pass).hexdigest()
 
 							if encode_pass == self.Hash:
+								self.finish = datetime.datetime.now() - self.start1
+								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 								exit()
 							else:
@@ -287,6 +319,8 @@ class IdentifierHashAndDecrypt:
 							encode_pass = hashlib.sha224(transf_pass).hexdigest()
 
 							if encode_pass == self.Hash:
+								self.finish = datetime.datetime.now() - self.start1
+								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 								exit()
 							else:
@@ -295,6 +329,8 @@ class IdentifierHashAndDecrypt:
 							encode_pass = hashlib.sha384(transf_pass).hexdigest()
 
 							if encode_pass == self.Hash:
+								self.finish = datetime.datetime.now() - self.start1
+								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 								exit()
 							else:
@@ -303,6 +339,8 @@ class IdentifierHashAndDecrypt:
 							encode_pass = hashlib.sha256(transf_pass).hexdigest()
 
 							if encode_pass == self.Hash:
+								self.finish = datetime.datetime.now() - self.start1
+								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 								exit()
 							else:
@@ -311,6 +349,8 @@ class IdentifierHashAndDecrypt:
 							encode_pass = hashlib.sha224(transf_pass).hexdigest()
 
 							if encode_pass == self.Hash:
+								self.finish = datetime.datetime.now() - self.start1
+								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 								exit()
 							else:
@@ -319,6 +359,8 @@ class IdentifierHashAndDecrypt:
 							encode_pass = hashlib.sha512(transf_pass).hexdigest()
 
 							if encode_pass == self.Hash:
+								self.finish = datetime.datetime.now() - self.start1
+								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 								print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 								exit()
 							else:
@@ -336,6 +378,8 @@ class IdentifierHashAndDecrypt:
 								encode_pass = hashlib.sha256(transf_pass).hexdigest()
 
 								if encode_pass == self.Hash:
+									self.finish = datetime.datetime.now() - self.start1
+									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 									exit()
 								else:
@@ -344,6 +388,8 @@ class IdentifierHashAndDecrypt:
 								encode_pass = hashlib.md4(transf_pass).hexdigest()
 
 								if encode_pass == self.Hash:
+									self.finish = datetime.datetime.now() - self.start1
+									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 									exit()
 								else:
@@ -353,6 +399,8 @@ class IdentifierHashAndDecrypt:
 								encode_pass = hashlib.md2(transf_pass).hexdigest()
 
 								if encode_pass == self.Hash:
+									self.finish = datetime.datetime.now() - self.start1
+									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 									exit()
 								else:
@@ -361,6 +409,8 @@ class IdentifierHashAndDecrypt:
 								encode_pass = hashlib.sha224(transf_pass).hexdigest()
 
 								if encode_pass == self.Hash:
+									self.finish = datetime.datetime.now() - self.start1
+									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 									exit()
 								else:
@@ -369,6 +419,8 @@ class IdentifierHashAndDecrypt:
 								encode_pass = hashlib.sha384(transf_pass).hexdigest()
 
 								if encode_pass == self.Hash:
+									self.finish = datetime.datetime.now() - self.start1
+									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 									exit()
 								else:
@@ -377,6 +429,8 @@ class IdentifierHashAndDecrypt:
 								encode_pass = hashlib.sha256(transf_pass).hexdigest()
 
 								if encode_pass == self.Hash:
+									self.finish = datetime.datetime.now() - self.start1
+									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 									exit()
 								else:
@@ -385,6 +439,8 @@ class IdentifierHashAndDecrypt:
 								encode_pass = hashlib.sha224(transf_pass).hexdigest()
 
 								if encode_pass == self.Hash:
+									self.finish = datetime.datetime.now() - self.start1
+									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 									exit()
 								else:
@@ -393,6 +449,8 @@ class IdentifierHashAndDecrypt:
 								encode_pass = hashlib.sha512(transf_pass).hexdigest()
 
 								if encode_pass == self.Hash:
+									self.finish = datetime.datetime.now() - self.start1
+									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1mTempo que o script levou pra achar:\033[m\033[1;34m {}\033[m".format(self.finish))
 									print("\033[1;32m[\033[m\033[1;34m+\033[m\033[1;32m]\033[m \033[1m{}  \033[1;33m|\033[m \033[m \033[1;36m{}\033[m".format(encode_pass,senhas))
 									exit()
 								else:
@@ -411,6 +469,8 @@ class IdentifierHashAndDecrypt:
 			print("Nenhuma hash encontrada!")
 		else:
 			print(resposta)
+			self.finish = datetime.datetime.now() - self.start1
+			print("Tempo até encontrar: {}".format(self.finish))
 
 if __name__ == "__main__":
 
